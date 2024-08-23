@@ -3,7 +3,7 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
-from .models import Question
+from .models import Question, Choice
 
 
 def create_question(question_text, days):
@@ -14,6 +14,12 @@ def create_question(question_text, days):
     """
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(question_text=question_text, pub_date=time)
+
+def create_choice(question, choice_text):
+    """
+        Create a choice for the given question with the given `question` with 'choices_text'
+    """
+    return Choice.objects.create(question=question, choice_text=choice_text)
 
 class QuestionTestCase(TestCase):
     def test_was_published_recently_with_future_question(self):
@@ -102,3 +108,40 @@ class QuestionDetailViewTests(TestCase):
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
 
+class QuestionResultsViewTests(TestCase):
+    def test_future_result(self):
+        """
+            The result view of a question with a pub_date in the future is return 404 not found.
+        """
+        future_question = create_question(question_text="Future question.", days=5)
+        url = reverse("polls:results", args=(future_question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_past_result(self):
+        """
+            The result view of a question with a pub_date in the past displays the question's text.
+        """
+        past_question = create_question(question_text="Past question.", days=-5)
+        url = reverse("polls:results", args=(past_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_question.question_text)
+
+
+
+class ChoiceDetailViewTests(TestCase):
+    def test_one_choice(self):
+        """ Display a Choice that added to a question"""
+        question = create_question(question_text="Past question", days=5)
+        choice = create_choice(question, choice_text="Choice One")
+        url = reverse("polls:detail", args=(question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, choice.choice_text)
+
+    def test_two_choices(self):
+        question = create_question(question_text="Past question", days=5)
+        choice1 = create_choice(question, choice_text="Choice One")
+        choice2 = create_choice(question, choice_text="Choice Two")
+        url = reverse("polls:detail", args=(question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, [choice1.choice_text, choice2.choice_text])
