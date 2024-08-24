@@ -7,7 +7,11 @@ from django.utils import timezone
 
 from polls.models import Question, Choice
 
+
 class IndexView(generic.ListView):
+    """
+        Index view show all published questions.
+    """
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
 
@@ -15,7 +19,11 @@ class IndexView(generic.ListView):
         """ Return the last five published questions. """
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
 
+
 class DetailView(generic.DetailView):
+    """
+        Detail view show question detail including the choice and vote button.
+    """
     model = Question
     template_name = "polls/detail.html"
 
@@ -27,6 +35,9 @@ class DetailView(generic.DetailView):
 
 
 class ResultsView(generic.DetailView):
+    """
+        Results view show question and each choice score.
+    """
     model = Question
     template_name = "polls/results.html"
 
@@ -54,5 +65,3 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     selected_choice.save()
     # Redirect user to results page
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
-

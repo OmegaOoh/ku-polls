@@ -15,42 +15,51 @@ def create_question(question_text, days):
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(question_text=question_text, pub_date=time)
 
+
 def create_choice(question, choice_text):
     """
         Create a choice for the given question with the given `question` with 'choices_text'
     """
     return Choice.objects.create(question=question, choice_text=choice_text)
 
+
 class QuestionTestCase(TestCase):
+    """ Class to test the question model """
     def test_was_published_recently_with_future_question(self):
-        """was_published_recently() returns False for questions
-        whose pub_date is in the future.
+        """
+            was_published_recently() returns False for questions
+            whose pub_date is in the future.
         """
         time = timezone.now() + datetime.timedelta(days=30)
         future_question = Question(pub_date=time)
         self.assertIs(future_question.was_published_recently(), False)
 
     def test_was_published_recently_with_old_question(self):
-        """ was_published_recently() returns False for question
-        whose pub_date is older than 1 day
+        """
+            was_published_recently() returns False for question
+            whose pub_date is older than 1 day
         """
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
         old_question = Question(pub_date=time)
         self.assertIs(old_question.was_published_recently(), False)
 
-
     def test_was_published_recently_with_recent_question(self):
-        """ was_published_recently() returns True for questions
-        whose pub_date is within last day.
+        """
+            was_published_recently() returns True for questions
+            whose pub_date is within last day.
         """
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
 
+
 class QuestionIndexViewTests(TestCase):
+    """
+        Module to test the index view on question.
+    """
     def test_no_question(self):
         """
-        If no question exist, an appropriate message is displayed.
+            If no question exist, an appropriate message is displayed.
         """
         response = self.client.get(reverse("polls:index"))
         self.assertEqual(response.status_code, 200)
@@ -58,6 +67,9 @@ class QuestionIndexViewTests(TestCase):
         self.assertQuerySetEqual(response.context['latest_question_list'], [])
 
     def test_past_question(self):
+        """
+            If question is published in the past, displayed the question correctly
+        """
         question = create_question(question_text="Past question.", days=-30)
         response = self.client.get(reverse("polls:index"))
         self.assertQuerySetEqual(response.context['latest_question_list'], [question])
@@ -89,7 +101,11 @@ class QuestionIndexViewTests(TestCase):
         response = self.client.get(reverse("polls:index"))
         self.assertQuerySetEqual(response.context['latest_question_list'], [question2, question1])
 
+
 class QuestionDetailViewTests(TestCase):
+    """
+        Module to test the detail view of a question.
+    """
     def test_future_question(self):
         """
             The detail view of a question with a pub_date in the future is return 404 not found.
@@ -108,7 +124,11 @@ class QuestionDetailViewTests(TestCase):
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
 
+
 class QuestionResultsViewTests(TestCase):
+    """
+        Module to test the result view of a question.
+    """
     def test_future_result(self):
         """
             The result view of a question with a pub_date in the future is return 404 not found.
@@ -128,8 +148,10 @@ class QuestionResultsViewTests(TestCase):
         self.assertContains(response, past_question.question_text)
 
 
-
 class ChoiceDetailViewTests(TestCase):
+    """
+        Module to test the choice of a question in detail view.
+    """
     def test_one_choice(self):
         """ Display a Choice that added to a question"""
         question = create_question(question_text="Past question", days=-5)
