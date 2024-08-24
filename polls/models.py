@@ -11,9 +11,11 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
-    datetime.timedelta(days=1)
-
     def was_published_recently(self):
+        """
+        Check if whether the question has been published recently.
+        :return: True if this question has been published within 24 hours, else False
+        """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 

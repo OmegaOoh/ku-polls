@@ -139,6 +139,7 @@ class ChoiceDetailViewTests(TestCase):
         self.assertContains(response, choice.choice_text)
 
     def test_two_choices(self):
+        """ Display all available choices for a question """
         question = create_question(question_text="Past question", days=-5)
         choice1 = create_choice(question, choice_text="Choice One")
         choice2 = create_choice(question, choice_text="Choice Two")
