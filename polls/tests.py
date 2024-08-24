@@ -132,16 +132,17 @@ class QuestionResultsViewTests(TestCase):
 class ChoiceDetailViewTests(TestCase):
     def test_one_choice(self):
         """ Display a Choice that added to a question"""
-        question = create_question(question_text="Past question", days=5)
+        question = create_question(question_text="Past question", days=-5)
         choice = create_choice(question, choice_text="Choice One")
         url = reverse("polls:detail", args=(question.id,))
         response = self.client.get(url)
         self.assertContains(response, choice.choice_text)
 
     def test_two_choices(self):
-        question = create_question(question_text="Past question", days=5)
+        question = create_question(question_text="Past question", days=-5)
         choice1 = create_choice(question, choice_text="Choice One")
         choice2 = create_choice(question, choice_text="Choice Two")
         url = reverse("polls:detail", args=(question.id,))
         response = self.client.get(url)
-        self.assertContains(response, [choice1.choice_text, choice2.choice_text])
+        self.assertContains(response, choice1.choice_text, count=1)
+        self.assertContains(response, choice2.choice_text, count=1)
