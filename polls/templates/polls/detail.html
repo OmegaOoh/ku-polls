@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{%load static%}
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {%csrf_token %}
     <fieldset>
