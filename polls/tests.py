@@ -25,6 +25,12 @@ def create_choice(question, choice_text):
 
 class QuestionTestCase(TestCase):
     """ Class to test the question model """
+
+    def test_question_default_date(self):
+        """ Check publish and end date default when create new question to be current date and time"""
+        q = Question.objects.create(question_text="Test Question")
+        self.assertAlmostEqual(q.pub_date, timezone.now())
+
     def test_was_published_recently_with_future_question(self):
         """
             was_published_recently() returns False for questions
