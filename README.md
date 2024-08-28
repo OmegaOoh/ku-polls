@@ -1,6 +1,6 @@
 # KU POLLS
 
-Polls web application powered by Django by follow [Django Tutorial](https://docs.djangoproject.com/en/5.1/intro/) used to conduct polls or surveys in the KU community
+Polls web application powered by Django based on [Django Tutorial](https://docs.djangoproject.com/en/5.1/intro/) used to conduct polls or surveys in the KU community
 with a simple web interface for creating polls with opening and closing for each poll or survey question,
 responding to opened polls and seeing the results of a poll even if the poll is closed.
 
@@ -27,3 +27,6 @@ All details can be found at [KU Polls Wiki](../../wiki/Home) including:
 - [Project Vision and Scope](/../../wiki/Vision-and-Scope)
 - [Project Plan](/../../wiki/Project-Plan)
 - [Project Requirements](/../../wiki/Requirements)
+- [Domain Diagram](../../wiki/Domain-Diagram)
+
+[Technical Notes](../../wiki/Technical-Note) contains minor technical note along the development of the project
