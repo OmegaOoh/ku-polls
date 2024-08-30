@@ -19,6 +19,24 @@ class Question(models.Model):
         """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+    
+    def is_published(self):
+        """
+        Check if the question is in the published period
+        :return: Boolean, True if current date is on or after publication date
+        """
+        now = timezone.now()
+        return self.pub_date <= now
+    
+    def can_vote(self):
+        """
+        Check if the voting is allow on the question
+        :return: returns True if voting is allowed for this question. That means, the current date/time is between the pub_date and end_date
+        """
+        now = timezone.now()
+        if self.end_date == None: 
+            return now <= self.pub_date
+        return self.pub_date <= now <= self.end_date
 
 
 class Choice(models.Model):
