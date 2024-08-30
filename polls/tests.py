@@ -70,12 +70,26 @@ class QuestionTestCase(TestCase):
         old_question = create_question("Is Published old", pub_days=-1)
         self.assertIs(old_question.is_published(), True)
 
+    def test_is_published_with_default_question(self):
+        """
+            is_published() return True for published question that published at the moment
+        """
+        question = Question(question_text="Is Published old")
+        self.assertIs(question.is_published(), True)
+
     def test_is_published_with_future_question(self):
         """
             is_published() return False for unpublished question
         """
         old_question = create_question("Is Published future", 1)
         self.assertIs(old_question.is_published(), False)
+
+    def test_can_vote_with_unpublished_question(self):
+        """
+            can_vote() return False for question whose unpublished at the moment
+        """
+        question = create_question("Can vote unpublished", pub_days=1)
+        self.assertIs(question.can_vote(), False)
 
     def test_can_vote_with_future_end_date(self):
         """
@@ -90,6 +104,13 @@ class QuestionTestCase(TestCase):
         """
         question = create_question("Can vote past", -5, -2)
         self.assertIs(question.can_vote(), False)
+
+    def test_can_vote_with_no_end_date(self):
+        """
+            can_vote() return True for question whose published and end date is None
+        """
+        question = create_question("Can vote past", -5)
+        self.assertIs(question.can_vote(), True)
 
 
 class QuestionIndexViewTests(TestCase):

@@ -34,9 +34,9 @@ class Question(models.Model):
         :return: returns True if voting is allowed for this question. That means, the current date/time is between the pub_date and end_date
         """
         now = timezone.now()
-        if self.end_date == None: 
-            return now <= self.pub_date
-        return self.pub_date <= now <= self.end_date
+        if self.end_date is None:
+            return self.pub_date <= now
+        return self.is_published() and now < self.end_date
 
 
 class Choice(models.Model):
