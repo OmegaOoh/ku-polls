@@ -6,22 +6,120 @@ li a
 body 
 {
     background: white url("images/background.png") no-repeat;
-
 }
 
 h1 
 {
-    color: white;
+    color: lightyellow;
+    font-size: 4vw;
 }
 
 label
 {
     color: lightyellow;
+    font-size: 2vw;
 }
 
 ul
 {
     color: lightyellow;
+    font-size: 1vw;
 }
 
+form fieldset
+{
+    background-color: rgba(0,0,0,0.5)
+}
+
+p strong
+{
+    color: red
+}
+
+table
+{
+    margin:auto;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.5);
+    color: lightyellow;
+    font-size: 1.75vw;
+    backdrop-filter: blur(5px);
+}
+
+td
+{
+    padding: 5%;
+}
+
+.vote
+{
+    text-align: center;
+    font-size: 1.5vw;
+}
+
+.question_box
+{
+    display:grid;
+    justify-content: left;
+    gap:3vw;
+    grid-template-columns: auto auto auto;
+
+}
+
+.question_box .box
+{
+    width: 30vw;
+    height: 3.5vw;
+    background-color: dimgray;
+    border: 2px dimgray;
+    border-radius: 5px;
+    padding: 3%;
+    padding-top: 6%;
+    margin:2%;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    overflow: hidden;
+    font-size: 1.75vw;
+    text-align: left;
+}
+
+.header
+{
+    color: greenyellow;
+    font-size: 4vw;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding:3%;
+    backdrop-filter: blur(10px);
+    
+}
+
+.center_container
+{
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+    margin: 1%;
+}
+
+.left_container
+{
+    display: flex;
+    justify-content: left;
+    gap: 2%;
+    margin: 1%;
+}
+
+
+.redirect_button
+{
+    background-color: lightgrey;
+    border-radius: 5px;
+    padding-inline: 10%;
+    text-align: center;
+    font-size: 1.5vw;
+}
 
