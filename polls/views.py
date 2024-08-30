@@ -1,9 +1,11 @@
+from typing import Any
 from django.db.models import F
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.messages import error
 
 from polls.models import Question, Choice
 
@@ -18,6 +20,11 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         """ Return the last five published questions. """
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        
+        return super().get_context_data(**kwargs)
+        
 
 
 class DetailView(generic.DetailView):
@@ -32,6 +39,19 @@ class DetailView(generic.DetailView):
             Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        """
+            Override Get method to check for question that does not exist and redirects user
+        """
+        try:
+            Question.objects.get(pk = kwargs['pk'])
+            return super().get(request, *args, **kwargs)
+        except (Question.DoesNotExist):
+            error(request, f"Polls {kwargs['pk']} not exists.")
+            return redirect(f"{reverse('polls:index')}")
+        
+        
 
 
 class ResultsView(generic.DetailView):
