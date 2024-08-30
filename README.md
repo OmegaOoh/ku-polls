@@ -4,6 +4,15 @@ Polls web application powered by Django used to conduct polls or surveys in the 
 with a simple web interface for creating polls with opening and closing for each poll or survey question,
 responding to opened polls and seeing the results of a poll even if the poll is closed.
 
+## Create configuration file
+1. Create file name `.env`
+2. Add in the configuration
+``` .env
+SECRET_KEY = ''
+DEBUG = False
+ALLOWED_HOSTS = []
+TIME_ZONE = ''
+```
 
 ## How to run
 1. Install required package `pip install -r requirements.txt`
