@@ -15,6 +15,10 @@ jobs:
       matrix:
         python-version: [3.11, 3.12]
 
+    env:
+      SECRET_KEY : ${{secrets.SECRET_KEY-test_env}}
+      TIME_ZONE : ${{var.TIME_ZONE-test_env}}
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -25,6 +29,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Create .env file
+      run: |
+        touch .env
+        echo   "SECRET_KEY = $SECRET_KEY" >> .env
+        echo   "DEBUG = FALSE" >> .env
+        echo   "ALLOWED_HOSTS = 'localhost'
+        echo   "TIME_ZONE = $TIME_ZONE
+
     - name: Run Tests
       run: |
         python manage.py test
