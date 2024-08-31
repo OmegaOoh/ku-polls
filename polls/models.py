@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+
 class Question(models.Model):
     """ Question model to store the question text and its publication date"""
     question_text = models.CharField(max_length=200)
@@ -19,7 +20,7 @@ class Question(models.Model):
         """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
-    
+
     def is_published(self):
         """
         Check if the question is in the published period
@@ -27,11 +28,12 @@ class Question(models.Model):
         """
         now = timezone.now()
         return self.pub_date <= now
-    
+
     def can_vote(self):
         """
         Check if the voting is allow on the question
-        :return: returns True if voting is allowed for this question. That means, the current date/time is between the pub_date and end_date
+        :return: returns True if voting is allowed for this question. That means,
+         the current date/time is between the pub_date and end_date
         """
         now = timezone.now()
         if self.end_date is None:

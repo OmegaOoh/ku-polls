@@ -6,7 +6,7 @@ from django.urls import reverse
 from .models import Question, Choice
 
 
-def create_question(question_text, pub_days, end_days = None):
+def create_question(question_text, pub_days, end_days=None):
     """
         Create a question with the given `question_text` and published the
         given number of `days` offset to now (negative for questions published
@@ -14,7 +14,7 @@ def create_question(question_text, pub_days, end_days = None):
     """
     pub_time = timezone.now() + datetime.timedelta(days=pub_days)
     end_time = None
-    if end_days != None:
+    if end_days is not None:
         end_time = timezone.now() + datetime.timedelta(days=end_days)
     return Question.objects.create(question_text=question_text, pub_date=pub_time, end_date=end_time)
 
@@ -34,7 +34,7 @@ class QuestionTestCase(TestCase):
         q = Question.objects.create(question_text="Test Question")
         time_ahead = timezone.now() + timezone.timedelta(milliseconds=10)
         time_behind = timezone.now() - timezone.timedelta(milliseconds=10)
-        self.assertIs( time_behind <=q.pub_date <= time_ahead, True)
+        self.assertIs(time_behind <= q.pub_date <= time_ahead, True)
 
     def test_was_published_recently_with_future_question(self):
         """
