@@ -7,7 +7,7 @@ class Question(models.Model):
     """ Question model to store the question text and its publication date"""
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published', default=timezone.now)
-    end_date = models.DateTimeField('poll end date', blank=True, default=None)
+    end_date = models.DateTimeField('poll end date', blank=True, null=True, default=None)
 
     def __str__(self):
         return self.question_text
