@@ -1,9 +1,11 @@
+from typing import Any
 from django.db.models import F
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.messages import error
 
 from polls.models import Question, Choice
 
@@ -33,6 +35,17 @@ class DetailView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        """
+            Override Get method to check for question that does not exist and redirects user
+        """
+        try:
+            Question.objects.get(pk=kwargs['pk'])
+            return super().get(request, *args, **kwargs)
+        except (Question.DoesNotExist):
+            error(request, f"Polls {kwargs['pk']} not exists.")
+            return redirect(f"{reverse('polls:index')}")
+
 
 class ResultsView(generic.DetailView):
     """
@@ -55,12 +68,17 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form
-        return render(request, 'polls/detail.html',
-                  {
-                            "question": question,
-                            "error_message": "You didn't select a choice.",
-                          }
-                     )
+        context = {
+            "question": question,
+            "error_message": "You didn't select a choice.",
+        }
+        return render(request, 'polls/detail.html', context=context)
+    if not question.can_vote():
+        context = {
+            "question": question,
+            "error_message": "This polls is closed.",
+        }
+        return render(request, 'polls/detail.html', context=context)
     selected_choice.votes = F("votes") + 1
     selected_choice.save()
     # Redirect user to results page

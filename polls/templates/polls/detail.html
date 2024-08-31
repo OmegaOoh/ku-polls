@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 {%load static%}
+
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {%csrf_token %}
@@ -17,6 +19,19 @@
             </label><br>
         {%endfor %}
     </fieldset>
-    <input type="submit" value="Vote">
+    <input class='vote' type="submit" value="Vote">
 </form>
+<div class='left_container'>
+    <a href="{% url 'polls:index' %}">
+        <div class='redirect_button'>
+            To Polls List
+        </div>
+    </a>
+    <a href="{%url "polls:results" question.id%}">
+        <div class='redirect_button'>
+            See Results
+        </div>
+    </a>
+</div>
+    
 </html>
