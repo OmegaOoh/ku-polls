@@ -1,4 +1,5 @@
 from typing import Any
+from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -61,6 +62,7 @@ class ResultsView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 
+@login_required
 def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     """ Handle votes POST request from vote button (detail page) """
     question = get_object_or_404(Question, pk=question_id)
