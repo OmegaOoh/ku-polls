@@ -24,6 +24,11 @@ Please <a href="{% url 'login'%}?next={{request.path}}"> Login </a> to vote
             <div class="box" >
             {{question.question_text}}
                 <div class='buttons'>
+                    {% if question.can_vote %}
+                        <div class='open'>●</div>
+                    {%else%}
+                        <div class='close'>🞮</div>
+                    {%endif%}
                     <form action="{% url 'polls:results' question.id %}" method='get'> 
                         <button class='small_button' type='submit'> Results </button> 
                     </form>

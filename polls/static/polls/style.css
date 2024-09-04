@@ -74,7 +74,7 @@ td
 .question_box .box
 {
     width: 30vw;
-    height: 4.5vw;
+    height: 7vw;
     background-color: rgba(100,100,100,0.8);
     border: 50%;
     border-radius: 5px;
@@ -85,18 +85,38 @@ td
     margin-right: auto;
     color: white;
     overflow: hidden;
-    font-size: 1.75vw;
+    font-size: 2vw;
     text-align: left;
-    
+    display: grid;
+    grid-template-rows: 5vw 1.75vw;
 }
 
 .question_box .box .buttons
 {
     display:grid;
     justify-content: right;
+    text-align: center;
     gap:1vw;
+    font-size: 1.75vw;
     grid-template-columns: auto auto auto;
 }
+
+.question_box .box .buttons .open
+{
+    color: greenyellow;
+}
+
+.question_box .box .buttons .close
+{
+    color: red;
+}
+
+.question_box .box .small_buttons 
+{
+    text-align: center;
+    font-size: 1.5vw;
+}
+
 
 .header
 {
@@ -105,6 +125,7 @@ td
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    border: 5% red;
     padding:3%;
     backdrop-filter: blur(10px);
     
@@ -124,15 +145,5 @@ td
     justify-content: left;
     gap: 2%;
     margin: 1%;
-}
-
-
-.redirect_button
-{
-    background-color: lightgrey;
-    border-radius: 5px;
-    padding-inline: 10%;
-    text-align: center;
-    font-size: 1.5vw;
 }
 
