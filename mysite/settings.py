@@ -13,6 +13,7 @@ from email.policy import default
 from pathlib import Path
 from decouple import config
 from django.conf.global_settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
+from ipaddress import ip_address
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -132,3 +133,35 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "[%(asctime)s] %(levelname)s: %(message)s",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+            "style": "%",
+        },
+    },
+    "handlers": {
+        "polls_activity": {
+            "class": "logging.FileHandler",
+            "filename": "logs/activity.log",
+            "level": "DEBUG",
+            "formatter": "simple",
+        },
+        "console":{
+            "class": "logging.StreamHandler",
+            "formatter": "simple"
+        }
+    },
+    "loggers": {
+        "polls": {
+            "handlers": ["polls_activity","console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
