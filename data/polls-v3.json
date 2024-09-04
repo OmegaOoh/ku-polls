@@ -3,7 +3,7 @@
   "model": "polls.question",
   "pk": 1,
   "fields": {
-    "question_text": "What is you hobby?",
+    "question_text": "What is your hobby?",
     "pub_date": "2024-08-30T01:41:03Z",
     "end_date": null
   }
