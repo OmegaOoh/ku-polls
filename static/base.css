@@ -1,0 +1,54 @@
+.tab
+{
+    display: grid;
+    grid-template-columns: 70% 20% 10%;
+    background-color: rgba(53, 167, 53, 0.75);
+    height: 14vh;
+    justify-content: left;
+    justify-items: left;
+    padding-top: auto;
+    backdrop-filter: blur(5px);
+    
+}
+
+.home { text-decoration: none;}
+
+.tab .app_name {
+    font-size:6vh;
+    text-align: left;
+    color: rgb(233, 255, 189);
+    padding-left:  1vw;
+    
+}
+
+.tab .users
+{
+    color:white;
+    text-align: right;
+    font-size: 4vh;
+}
+
+.auth
+{
+    margin-top: 5vh;
+    font-size: 1.75vw;
+}
+
+
+.error
+{
+    color: red;
+    font-size: 3vw;
+}
+
+.warning
+{
+    color: yellow;
+    font-size: 3vw;
+}
+
+.success
+{
+    color:greenyellow;
+    font-size: 3vw;
+}

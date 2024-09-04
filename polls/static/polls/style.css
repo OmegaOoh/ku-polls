@@ -3,15 +3,14 @@ li a
     color: white;
 }
 
+legend
+{
+    color: white;
+}
+
 body 
 {
     background: white url("images/background.png") no-repeat;
-}
-
-h1 
-{
-    color: lightyellow;
-    font-size: 4vw;
 }
 
 label
