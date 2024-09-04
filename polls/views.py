@@ -6,9 +6,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from django.contrib.messages import error
+from django.contrib.messages import error, success
 
-from polls.models import Question, Choice
+from polls.models import Question, Choice, Vote
+from django.contrib import messages
 
 
 class IndexView(generic.ListView):
@@ -70,18 +71,31 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form
+        error(request, "You didn't select a choice.")
         context = {
             "question": question,
-            "error_message": "You didn't select a choice.",
         }
         return render(request, 'polls/detail.html', context=context)
     if not question.can_vote():
+        error(request, "This polls is closed.")
         context = {
             "question": question,
-            "error_message": "This polls is closed.",
         }
         return render(request, 'polls/detail.html', context=context)
-    selected_choice.votes = F("votes") + 1
+    # Reference to current user
+    cur_user = request.user
+
+    # Get the user vote's
+    try:
+        vote = cur_user.vote_set.get(choice__question=question)
+        # user has a vote for this question, update the choice.
+        vote.choice = selected_choice
+        vote.save()
+        messages.success(request,f"Your vote was updated to '{selected_choice.choice_text}'")
+    except (KeyError, Vote.DoesNotExist):
+        # user don't have a vote yet
+        vote = Vote.objects.create(user=cur_user, choice=selected_choice)
+        messages.success(request,f"Your voted for '{selected_choice.choice_text}'")
     selected_choice.save()
     # Redirect user to results page
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
