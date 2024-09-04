@@ -2,7 +2,7 @@
 <html lang="en">
 
 {%load static%}
-
+<title> KU Polls: {{question.question_text}} </title>
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {%csrf_token %}
@@ -18,19 +18,15 @@
             </label><br>
         {%endfor %}
     </fieldset>
-    <input class='vote' type="submit" value="Vote">
-</form>
-<div class='left_container'>
-    <a href="{% url 'polls:index' %}">
-        <div class='redirect_button'>
-            To Polls List
-        </div>
-    </a>
-    <a href="{%url "polls:results" question.id%}">
-        <div class='redirect_button'>
-            See Results
-        </div>
-    </a>
-</div>
+    <div class='left_container'>
+        <input class='small_button' type="submit" value="Vote">
+    </form>
+        <form action="{% url 'polls:index' %}" method='get'> 
+            <button class='small_button' type='submit'> To Poll List </button> 
+        </form>
+        <form action="{% url 'polls:results' question.id%}" method='get'> 
+            <button class='small_button' type='submit'> See Results </button> 
+        </form>
+    </div>
     
 </html>

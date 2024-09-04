@@ -52,7 +52,7 @@ td
     padding: 5%;
 }
 
-.vote
+.small_button
 {
     text-align: center;
     font-size: 1.5vw;
@@ -64,15 +64,19 @@ td
     justify-content: left;
     gap:3vw;
     grid-template-columns: auto auto auto;
-
+    
+}
+.question_box .link
+{
+    text-decoration: none;
 }
 
 .question_box .box
 {
     width: 30vw;
-    height: 3.5vw;
-    background-color: dimgray;
-    border: 2px dimgray;
+    height: 4.5vw;
+    background-color: rgba(100,100,100,0.8);
+    border: 50%;
     border-radius: 5px;
     padding: 3%;
     padding-top: 6%;
@@ -83,6 +87,15 @@ td
     overflow: hidden;
     font-size: 1.75vw;
     text-align: left;
+    
+}
+
+.question_box .box .buttons
+{
+    display:grid;
+    justify-content: right;
+    gap:1vw;
+    grid-template-columns: auto auto auto;
 }
 
 .header

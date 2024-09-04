@@ -23,12 +23,12 @@
     {% endfor %}
 </table>
 
+
+
 <div class="center_container" >
-  <a href="{% url 'polls:index' %}">
-    <div class='redirect_button'>
-    Back to Home
-    </div>
-  </a>
+  <form action="{% url 'polls:index' %}" method='get'> 
+    <button class='small_button' type='submit'> To Poll List </button> 
+  </form>
 </div>
 
 </html>
