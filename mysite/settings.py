@@ -148,7 +148,7 @@ LOGGING = {
     "handlers": {
         "polls_activity": {
             "class": "logging.FileHandler",
-            "filename": "logs/activity.log",
+            "filename": "activity.log",
             "level": "DEBUG",
             "formatter": "simple",
         },
