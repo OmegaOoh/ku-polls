@@ -2,7 +2,7 @@
 {
     display: grid;
     grid-template-columns: 70% 20% 10%;
-    background-color: rgba(53, 167, 53, 0.75);
+    background-color: rgba(174, 193, 255, 0.822);
     height: 14vh;
     justify-content: left;
     justify-items: left;
@@ -16,7 +16,7 @@
 .tab .app_name {
     font-size:6vh;
     text-align: left;
-    color: rgb(233, 255, 189);
+    color: rgb(255, 255, 255);
     padding-left:  1vw;
     
 }
@@ -25,7 +25,10 @@
 {
     color:white;
     text-align: right;
+    justify-self: right;
+    padding-right: 1vw;
     font-size: 4vh;
+    margin-top: 5vh;
 }
 
 .auth
