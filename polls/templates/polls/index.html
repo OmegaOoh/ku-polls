@@ -9,6 +9,14 @@
 
 {%block content%}
 <title> KU Polls </title>
+<div>
+    {%if messages%}
+        <div class='messages'>
+            {% for msg in messages %}  <p class={{msg.tags}}>{{ msg }}</p>
+            {% endfor %}
+        </div>
+    {%endif%}
+    </div>
 {% if latest_question_list %}
 <div class='question_box'>
     {% for question in latest_question_list %}

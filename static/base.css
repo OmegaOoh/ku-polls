@@ -42,17 +42,17 @@
 .error
 {
     color: red;
-    font-size: 3vw;
+    font-size: 3vh;
 }
 
 .warning
 {
     color: yellow;
-    font-size: 3vw;
+    font-size: 3vh;
 }
 
 .success
 {
     color:greenyellow;
-    font-size: 3vw;
+    font-size: 3vh;
 }
