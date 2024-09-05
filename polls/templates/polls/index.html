@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
+{% extends "base.html" %}
+{%block style%}
 {% load static %}
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
-<h1 class="header"> KU Polls </h1>
-{% if user.is_authenticated %} 
-Hi, {{user.username}}
-<form action="{% url 'logout' %}" method='post'> 
-    {%csrf_token%}
-    <button type='Submit'> Logout </button>
-</form>
-{% else %} 
-Please <a href="{% url 'login'%}?next={{request.path}}"> Login </a> to vote
+{%endblock style%}
 
-{% endif %}
-{% for msg in messages %} <p><strong>{{ msg }}</strong></p>
-{% endfor %}
+{%block content%}
+<title> KU Polls </title>
+<div>
+    {%if messages%}
+        <div class='messages'>
+            {% for msg in messages %}  <p class={{msg.tags}}>{{ msg }}</p>
+            {% endfor %}
+        </div>
+    {%endif%}
+    </div>
 {% if latest_question_list %}
 <div class='question_box'>
     {% for question in latest_question_list %}
-        <a href="{% url 'polls:detail' question.id %}">
+        <a class='link' href="{% url 'polls:detail' question.id %}">
             <div class="box" >
             {{question.question_text}}
+                <div class='buttons'>
+                    {% if question.can_vote %}
+                        <div class='open'>●</div>
+                    {%else%}
+                        <div class='close'>🞮</div>
+                    {%endif%}
+                    <form action="{% url 'polls:results' question.id %}" method='get'> 
+                        <button class='small_button' type='submit'> Results </button> 
+                    </form>
+                    <form action="{% url 'polls:detail' question.id %}" method='get'> 
+                        <button class='small_button' type='submit'> Vote </button> 
+                    </form>
+                </div>
             </div>
         </a>
     {% endfor %}
@@ -30,4 +43,5 @@ Please <a href="{% url 'login'%}?next={{request.path}}"> Login </a> to vote
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{%endblock content%}
 </html>

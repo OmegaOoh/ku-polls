@@ -1,14 +1,21 @@
 <html>
+{%load static%}
+<link rel="stylesheet" href="../../static/auth.css">
 <body>
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_table }}
-  <p>
-  <button type="submit">Login</button>
-  </p>
-  <input type="hidden" name="next" value="{{next}}"/>
- </form>
- {# If you have a sign-up page, then add a link here #}
+  <div class='box'>
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div>
+        <form action="{% url 'polls:index' %}" method='get'> 
+          <button type='submit'> Back to Home </button> 
+        </form>
+        <button type="submit">Login</button>
+      </div>
+      <input type="hidden" name="next" value="{{next}}"/>
+    </form>
+    {# If you have a sign-up page, then add a link here #}
+  </div>
 </body>
 </html>

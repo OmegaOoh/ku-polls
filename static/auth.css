@@ -1,0 +1,29 @@
+body
+{
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(116,0,167,1) 100%);
+}
+
+.box
+{
+    width: 20%;
+    background: white;
+    border-radius: 20px;
+    border-color: darkblue;
+    border-style:double;
+    margin-top: 10%;
+    margin-inline: 40%;
+    padding: 2%;
+    font-size: 1.5vw;
+    text-align: center;
+}
+
+.box h2
+{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.box button
+{
+    font-size: 1.2vw;
+}

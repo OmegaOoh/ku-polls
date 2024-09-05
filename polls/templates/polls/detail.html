@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% extends "base.html" %}
+{%block style%}
 {%load static%}
-
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{%endblock style%}
+{%block content%}
+<title> KU Polls: {{question.question_text}} </title>
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {%csrf_token %}
     <fieldset>
         <legend>
             <h1> {{ question.question_text }}</h1>
         </legend>
-        {% for msg in messages %} <p><strong>{{ msg }}</strong></p> {%endfor%}
+        <div>
+            {%if messages%}
+                <div class='messages'>
+                    {% for msg in messages %}  <p class={{msg.tags}}>{{ msg }}</p>
+                    {% endfor %}
+                </div>
+            {%endif%}
+            </div>
         {% for choice in question.choice_set.all %}
             <input type="radio" name="choice" id="choice{{ forloop.counter}}" value="{{choice.id}}">
             <label
@@ -18,19 +28,15 @@
             </label><br>
         {%endfor %}
     </fieldset>
-    <input class='vote' type="submit" value="Vote">
-</form>
-<div class='left_container'>
-    <a href="{% url 'polls:index' %}">
-        <div class='redirect_button'>
-            To Polls List
-        </div>
-    </a>
-    <a href="{%url "polls:results" question.id%}">
-        <div class='redirect_button'>
-            See Results
-        </div>
-    </a>
-</div>
-    
+    <div class='left_container'>
+        <input class='small_button' type="submit" value="Vote">
+    </form>
+        <form action="{% url 'polls:index' %}" method='get'> 
+            <button class='small_button' type='submit'> To Poll List </button> 
+        </form>
+        <form action="{% url 'polls:results' question.id%}" method='get'> 
+            <button class='small_button' type='submit'> See Results </button> 
+        </form>
+    </div>
+{%endblock content%}
 </html>
