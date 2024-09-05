@@ -8,6 +8,13 @@ legend
     color: white;
 }
 
+.q_txt
+{
+    color: antiquewhite;
+    size: 4.5vw;
+    text-align: center;
+}
+
 body 
 {
     background: white url("images/background.png") no-repeat;

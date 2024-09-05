@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% extends "base.html" %}
+{%block style%}
 {%load static%}
-<title> KU Polls: {{question.question_text}} </title>
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{%endblock style%}
+{%block content%}
+<title> KU Polls: {{question.question_text}} </title>
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {%csrf_token %}
     <fieldset>
@@ -28,5 +31,5 @@
             <button class='small_button' type='submit'> See Results </button> 
         </form>
     </div>
-    
+{%endblock content%}
 </html>
