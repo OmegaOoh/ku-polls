@@ -7,9 +7,12 @@
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <p>
-      <button type="submit">Login</button>
-      </p>
+      <div>
+        <form action="{% url 'polls:index' %}" method='get'> 
+          <button type='submit'> Back to Home </button> 
+        </form>
+        <button type="submit">Login</button>
+      </div>
       <input type="hidden" name="next" value="{{next}}"/>
     </form>
     {# If you have a sign-up page, then add a link here #}
