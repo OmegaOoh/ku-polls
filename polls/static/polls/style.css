@@ -5,7 +5,8 @@ li a
 
 legend
 {
-    color: white;
+    color: antiquewhite;
+    font-size: 1.5vw
 }
 
 .q_txt
@@ -34,6 +35,7 @@ ul
 
 form fieldset
 {
+    backdrop-filter: blur(5px);
     background-color: rgba(0,0,0,0.5)
 }
 
@@ -82,6 +84,7 @@ td
     width: 30vw;
     height: 7vw;
     background-color: rgba(100,100,100,0.8);
+    backdrop-filter: blur(5px);
     border: 50%;
     border-radius: 5px;
     padding: 3%;

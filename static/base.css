@@ -2,7 +2,7 @@
 {
     display: grid;
     grid-template-columns: 70% 20% 10%;
-    background-color: rgba(174, 193, 255, 0.822);
+    background-color: rgba(174, 193, 255);
     height: 14vh;
     justify-content: left;
     justify-items: left;
