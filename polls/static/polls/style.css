@@ -97,6 +97,11 @@ td
     grid-template-rows: 5vw 1.75vw;
 }
 
+.question_box .box:hover
+{
+    background-color: rgba(180, 180, 180, 0.934);
+}
+
 .question_box .box .buttons
 {
     display:grid;
