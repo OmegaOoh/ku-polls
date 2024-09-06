@@ -36,6 +36,8 @@ To generate the secret key run this commands
 1.  Load the poll data `python manage.py loaddata data/<filename>`
 2.  Run `python manage.py runserver` to start the web application.
 
+If needed to run server without debug mode but want to load the statics file use `python manage.py runserver --insecure`
+
 ## Default/Debug User
 | username | password |
 |----------|----------|
