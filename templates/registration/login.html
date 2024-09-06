@@ -1,0 +1,19 @@
+<html>
+{%load static%}
+<link rel="stylesheet" href="../../static/auth.css">
+<body>
+  <div class='box'>
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+      <input type="hidden" name="next" value="{{next}}"/>
+    </form>
+    <form  action='/' method='get'> 
+      <button type='submit'> Back to Home </button> 
+    </form>
+    {# If you have a sign-up page, then add a link here #}
+  </div>
+</body>
+</html>

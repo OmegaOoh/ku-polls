@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
+{% extends "base.html" %}
+{%block style%}
 {% load static %}
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
-<h1 class="header"> KU Polls </h1>
-{% for msg in messages %} <p><strong>{{ msg }}</strong></p>
-{% endfor %}
+{%endblock style%}
+
+{%block content%}
+<title> KU Polls </title>
+<div>
+    {%if messages%}
+        <div class='messages'>
+            {% for msg in messages %}  <p class={{msg.tags}}>{{ msg }}</p>
+            {% endfor %}
+        </div>
+    {%endif%}
+    </div>
 {% if latest_question_list %}
 <div class='question_box'>
     {% for question in latest_question_list %}
-        <a href="{% url 'polls:detail' question.id %}">
+        {% if question.can_vote %}
+        <a class='link' href="{% url 'polls:detail' question.id %}">
+        {% else %}
+        <a class='link' href="{% url 'polls:results' question.id %}">
+        {% endif %}
             <div class="box" >
             {{question.question_text}}
+                <div class='buttons'>
+                    {% if question.can_vote %}
+                        <div class='open'>●</div>
+                    {%else%}
+                        <div class='close'>🞮</div>
+                    {%endif%}
+                    <form action="{% url 'polls:results' question.id %}" method='get'> 
+                        <button class='small_button' type='submit'> Results </button> 
+                    </form>
+                    {% if question.can_vote%}
+                    <form action="{% url 'polls:detail' question.id %}" method='get'> 
+                        <button class='small_button' type='submit'> Vote </button> 
+                    </form>
+                    {%endif%}
+                </div>
             </div>
         </a>
     {% endfor %}
@@ -20,4 +49,5 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{%endblock content%}
 </html>

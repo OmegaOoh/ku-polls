@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'base.css' %}">
+{%block style%}
+{%endblock style%}
+<div class="tab">
+    <a class='home' href="{%url 'polls:index' %}">
+        <h1 class='app_name'> KU Polls </h1>
+    </a>
+    <p class='users'>
+        {% if user.is_authenticated %} 
+        Hi, {{user.username}} 
+        <form action="{% url 'logout' %}" method='post'> 
+            {%csrf_token%}
+            <button class="auth" type='Submit'> Logout </button>
+        </form>
+        {% else %} 
+        <form action="{% url 'login' %}" method='get'> 
+            {%csrf_token%}
+            <button class="auth" type='Submit'> Log in </button>
+        </form>
+        {% endif %}
+    </p>
+</div>
+<body>
+    {%block content%}
+    {%endblock content%}
+</body>

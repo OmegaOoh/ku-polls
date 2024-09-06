@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-{%load static%}
+{% extends "base.html" %}
 
+{%block style%}
+{%load static%}
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
-<h1> {{question.question_text}}</h1>
+{%endblock style%}
 
-<table>
-  <thead>
-    <tr>
-      <th>Choice</th>
-      <th>Votes</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-    {% for choice in question.choice_set.all %}
-    <tr>  
-      <td> {{ choice.choice_text }} </td>
-      <td class='vote'> {{ choice.votes }} </td>
-    </tr>
-    {% endfor %}
-</table>
-
-<div class="center_container" >
-  <a href="{% url 'polls:index' %}">
-    <div class='redirect_button'>
-    Back to Home
+{%block content%}
+<title> KU Polls Results: {{question.question_text}} </title>
+<div class='span'>
+  <h1 class='q_txt'> {{question.question_text}}</h1>
+  <div style='text-align: center;'>
+    {%if messages%}
+        <div class='messages'>
+            {% for msg in messages %}  <p class={{msg.tags}}>{{ msg }}</p>
+            {% endfor %}
+        </div>
+    {%endif%}
     </div>
-  </a>
-</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Choice</th>
+        <th>Votes</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for choice in question.choice_set.all %}
+      <tr>  
+        <td {%if voted_choice == choice.id %} style='color:yellowgreen;'{%endif%}>   {{ choice.choice_text }}</td>
+        <td {%if voted_choice == choice.id %} style='color:yellowgreen;'{%endif%} class='vote'>{{ choice.votes }} </td>
+      </tr>
+      {% endfor %}
+  </table>
 
+  <div class="center_container" >
+    <form action="{% url 'polls:index' %}" method='get'> 
+      <button class='small_button' type='submit'> To Poll List </button> 
+    </form>
+  </div>
+  {%endblock content%}
+</div>
 </html>
