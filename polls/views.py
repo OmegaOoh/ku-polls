@@ -163,6 +163,9 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
 
 # Logging for Authorization system
 def get_client_ip(request):
+    """
+    Get IP address of visitor or user by HTTP request
+    """
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         return x_forwarded_for.split(',')[0]
@@ -171,18 +174,27 @@ def get_client_ip(request):
 
 @receiver(user_logged_in)
 def log_user_logged_in(sender, request, user, **kwargs):
+    """
+    Log user log in action
+    """
     ip_addr = get_client_ip(request)
     logger.info(f"User {user.username} has logged in (IP: {ip_addr})")
 
 
 @receiver(user_logged_out)
 def log_user_logged_out(sender, request, user, **kwargs):
+    """
+    Log user log out action
+    """
     ip_addr = get_client_ip(request)
     logger.info(f"User {user.username} has logged out (IP: {ip_addr})")
 
 
 @receiver(user_login_failed)
 def log_user_login_failed(sender, credentials, request, **kwargs):
+    """
+    Log user failed to login
+    """
     ip_addr = get_client_ip(request)
     username = credentials['username']
     logger.warn(f"User Failed Login to {username} (IP: {ip_addr})")
