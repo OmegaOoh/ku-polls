@@ -34,11 +34,25 @@ class DetailView(generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
 
+
+
+
     def get_queryset(self):
         """
             Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        """ Override of get_context_data method to add/modify the context data"""
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            try:
+                vote = Vote.objects.get(user=self.request.user, choice__question=self.question)
+                context['voted_choice'] = vote.choice.id
+            except (Vote.DoesNotExist):
+                context['voted_choice'] = None
+        return context
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         """
@@ -46,7 +60,7 @@ class DetailView(generic.DetailView):
         """
         question_id = kwargs['pk']
         try:
-            Question.objects.get(pk=question_id)
+            self.question = Question.objects.get(pk=question_id)
             return super().get(request, *args, **kwargs)
         except (Question.DoesNotExist):
             messages.error(request, f"Polls {question_id} not exists.")
