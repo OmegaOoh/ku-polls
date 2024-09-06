@@ -20,7 +20,11 @@
 {% if latest_question_list %}
 <div class='question_box'>
     {% for question in latest_question_list %}
+        {% if question.can_vote %}
         <a class='link' href="{% url 'polls:detail' question.id %}">
+        {% else %}
+        <a class='link' href="{% url 'polls:results' question.id %}">
+        {% endif %}
             <div class="box" >
             {{question.question_text}}
                 <div class='buttons'>
@@ -32,9 +36,11 @@
                     <form action="{% url 'polls:results' question.id %}" method='get'> 
                         <button class='small_button' type='submit'> Results </button> 
                     </form>
+                    {% if question.can_vote%}
                     <form action="{% url 'polls:detail' question.id %}" method='get'> 
                         <button class='small_button' type='submit'> Vote </button> 
                     </form>
+                    {%endif%}
                 </div>
             </div>
         </a>

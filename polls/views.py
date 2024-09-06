@@ -81,6 +81,22 @@ class ResultsView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        if (self.request.user.is_authenticated):
+            vote = Vote.objects.get(user=self.request.user, choice__question=self.question)
+            context['voted_choice'] = vote.choice.id
+        else:
+            context['voted_choice'] = None
+        return context
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        self.request = request
+        question_id = kwargs['pk']
+        self.question = Question.objects.get(pk=question_id)
+        return super().get(request, *args, **kwargs)
+
+
 
 @login_required
 def vote(request: HttpRequest, question_id: int) -> HttpResponse:

@@ -31,8 +31,8 @@
       
       {% for choice in question.choice_set.all %}
       <tr>  
-        <td> {{ choice.choice_text }} </td>
-        <td class='vote'> {{ choice.votes }} </td>
+        <td {%if voted_choice == choice.id %} style='color:yellowgreen;'{%endif%}>   {{ choice.choice_text }}</td>
+        <td {%if voted_choice == choice.id %} style='color:yellowgreen;'{%endif%} class='vote'>{{ choice.votes }} </td>
       </tr>
       {% endfor %}
   </table>
