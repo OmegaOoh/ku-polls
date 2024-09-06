@@ -13,6 +13,7 @@ import logging
 from polls.models import Question, Choice, Vote
 
 logger = logging.getLogger(__name__)
+user_choice = None  # Store choice in case of unauthenicated votes
 
 class IndexView(generic.ListView):
     """
@@ -97,13 +98,18 @@ class ResultsView(generic.DetailView):
 
 
 @login_required
-def vote(request: HttpRequest, question_id: int) -> HttpResponse:
+def voting(request: HttpRequest, question_id: int) -> HttpResponse:
     """ Handle votes POST request from vote button (detail page) """
+    global user_choice
+    
     question = get_object_or_404(Question, pk=question_id)
     # Reference to current user
     cur_user = request.user
     try:
-        selected_choice = question.choice_set.get(pk=request.POST["choice"])
+        if (user_choice is not None):
+            selected_choice = user_choice
+        else:
+            selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form
         messages.error(request, "You didn't select a choice.")
@@ -135,6 +141,24 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     selected_choice.save()
     # Redirect user to results page
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def vote(request: HttpRequest, question_id: int) -> HttpResponse:
+    """ Handle votes POST request from vote button (detail page) """
+    global user_choice
+    if not request.user.is_authenticated:
+        # User does not authenicated, save their choice before redirect
+        question = get_object_or_404(Question, pk=question_id)
+        try:
+            user_choice = question.choice_set.get(pk=request.POST["choice"])
+        except (KeyError, Choice.DoesNotExist):
+            user_choice = None
+    response = voting(request, question_id)
+    if request.user.is_authenticated:
+        # user is now authenicated and those choice supposed to be proccessed
+        # delete the user_choice after processed
+        del user_choice
+    return response  # return the response from vote operation
 
 
 # Logging for Authorization system
