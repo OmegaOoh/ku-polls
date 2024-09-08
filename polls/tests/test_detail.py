@@ -17,8 +17,7 @@ class QuestionDetailViewTests(TestCase):
         future_question = create_question(question_text="Future question.", pub_days=5)
         url = reverse("polls:detail", args=(future_question.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse("polls:index"))
+        self.assertEqual(response.status_code, 404)
 
     def test_past_question(self):
         """
