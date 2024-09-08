@@ -2,6 +2,7 @@
 
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 from polls.models import Question, Choice
 
 def create_question(question_text, pub_days, end_days=None):
@@ -22,4 +23,11 @@ def create_choice(question, choice_text):
         Create a choice for the given question with the given `question` with 'choices_text'
     """
     return Choice.objects.create(question=question, choice_text=choice_text)
+
+def create_user(username, password):
+    """
+        Create a user with specifics username and password
+    """
+    return User.objects.create(username=username, password=password)
+
 
