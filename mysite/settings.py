@@ -151,15 +151,11 @@ LOGGING = {
             "filename": "activity.log",
             "level": "DEBUG",
             "formatter": "simple",
-        },
-        "console":{
-            "class": "logging.StreamHandler",
-            "formatter": "simple"
         }
     },
     "loggers": {
         "polls": {
-            "handlers": ["polls_activity","console"],
+            "handlers": ["polls_activity"],
             "level": "DEBUG",
             "propagate": True,
         },

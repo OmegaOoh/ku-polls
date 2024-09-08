@@ -1,12 +1,10 @@
-import django.test
+from  django.test import TestCase
 from .shortcut import create_user, create_question, create_choice
 from django.urls import reverse
 from django.contrib.auth.models import User
-from polls.models import Question, Choice
 from django.conf import settings
 
-class UserAuthTest(django.test.TestCase):
-
+class UserAuthTest(TestCase):
     def setUp(self):
         super().setUp()
         self.username = "testuser"
@@ -53,3 +51,4 @@ class UserAuthTest(django.test.TestCase):
         self.assertEqual(response.status_code, 302)
         login_with_next = f"{reverse('login')}?next={vote_url}"
         self.assertRedirects(response, login_with_next)
+
