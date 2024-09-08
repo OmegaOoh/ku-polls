@@ -50,6 +50,6 @@ All details can be found at [KU Polls Wiki](../../wiki/Home) including:
 - [Project Vision and Scope](/../../wiki/Vision-and-Scope)
 - [Project Plan](/../../wiki/Project-Plan)
 - [Project Requirements](/../../wiki/Requirements)
-- [Domain Diagram](../../wiki/Domain-Diagram)
+- [Domain Diagram](../../wiki/Domain-Model)
 
 [Technical Notes](../../wiki/Technical-Note) contains minor technical note along the development of the project
