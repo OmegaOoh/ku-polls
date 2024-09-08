@@ -55,17 +55,22 @@ class DetailView(generic.DetailView):
         return context
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        """
-            Override Get method to check for question that does not exist and redirects user
-        """
-        question_id = kwargs['pk']
-        try:
-            self.question = Question.objects.get(pk=question_id)
-            return super().get(request, *args, **kwargs)
-        except (Question.DoesNotExist):
-            messages.error(request, f"Polls {question_id} not exists.")
-            logger.error(f"IP {get_client_ip(request)} tried to access non-existent question (ID: {question_id})")
-            return redirect(f"{reverse('polls:index')}")
+            """
+                Override Get method to check for question that does not exist and redirects user
+            """
+            question_id = kwargs['pk']
+            try:
+                self.question = Question.objects.get(pk=question_id)
+                if (not self.question.can_vote()):  # unpublished question or question is closed
+                    if (not self.question.is_published()):
+                        raise Question.DoesNotExist
+                    else:
+                        return redirect(f"{reverse('polls:results', question_id)}")
+                return super().get(request, *args, **kwargs)
+            except (Question.DoesNotExist):
+                messages.error(request, f"Polls {question_id} not exists.")
+                logger.error(f"IP {get_client_ip(request)} tried to access non-existent question (ID: {question_id})")
+                return redirect(f"{reverse('polls:index')}")
 
 
 class ResultsView(generic.DetailView):
@@ -83,11 +88,15 @@ class ResultsView(generic.DetailView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        if (self.request.user.is_authenticated):
-            vote = Vote.objects.get(user=self.request.user, choice__question=self.question)
-            context['voted_choice'] = vote.choice.id
-        else:
+        try:
+            if (self.request.user.is_authenticated):
+                vote = Vote.objects.get(user=self.request.user, choice__question=self.question)
+                context['voted_choice'] = vote.choice.id
+            else:
+                context['voted_choice'] = None
+        except(Vote.DoesNotExist, Vote.objects.model.DoesNotExist):
             context['voted_choice'] = None
+        
         return context
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
