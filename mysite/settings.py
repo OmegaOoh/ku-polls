@@ -155,7 +155,7 @@ LOGGING = {
     },
     "loggers": {
         "polls": {
-            "handlers": ["polls_activity"],
+            "handlers": ["polls_activity",],
             "level": "DEBUG",
             "propagate": True,
         },
