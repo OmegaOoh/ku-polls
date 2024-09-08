@@ -61,6 +61,8 @@ class DetailView(generic.DetailView):
         question_id = kwargs['pk']
         try:
             self.question = Question.objects.get(pk=question_id)
+            if (not self.question.is_published()):
+                raise Question.DoesNotExist
             return super().get(request, *args, **kwargs)
         except (Question.DoesNotExist):
             messages.error(request, f"Polls {question_id} not exists.")
