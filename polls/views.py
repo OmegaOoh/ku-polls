@@ -13,7 +13,7 @@ import logging
 from polls.models import Question, Choice, Vote
 
 logger = logging.getLogger(__name__)
-user_choice = None  # Store choice in case of unauthenicated votes
+user_choice = None  # Store choice in case of unauthenticated votes
 
 class IndexView(generic.ListView):
     """
@@ -46,11 +46,11 @@ class DetailView(generic.DetailView):
         # Check for previous selected choice
         if self.request.user.is_authenticated:
             try:
-                # User is authenicated
+                # User is authenticated
                 vote = Vote.objects.get(user=self.request.user, choice__question=self.question)
                 context['voted_choice'] = vote.choice.id
             except (Vote.DoesNotExist):
-                # User is not authenicated
+                # User is not authenticated
                 context['voted_choice'] = None
         return context
 
@@ -156,7 +156,7 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     """ Handle votes POST request from vote button (detail page) """
     global user_choice
     if not request.user.is_authenticated:
-        # User does not authenicated, save their choice before redirect
+        # User does not authenticated, save their choice before redirect
         question = get_object_or_404(Question, pk=question_id)
         try:
             user_choice = question.choice_set.get(pk=request.POST["choice"])
@@ -164,9 +164,9 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
             user_choice = None
     response = voting(request, question_id)
     if request.user.is_authenticated:
-        # user is now authenicated and those choice supposed to be proccessed
+        # user is now authenticated and those choice supposed to be processed
         # delete the user_choice after processed
-        del user_choice
+        user_choice = None
     return response  # return the response from vote operation
 
 
