@@ -1,6 +1,6 @@
 # KU POLLS
 
-![django CI workflow](../../actions/workflows/django.yml/badge.svg)
+[![Django CI](https://github.com/OmegaOoh/ku-polls/actions/workflows/django.yml/badge.svg)](https://github.com/OmegaOoh/ku-polls/actions/workflows/django.yml)
 
 Polls web application powered by Django based on [Django Tutorial](https://docs.djangoproject.com/en/5.1/intro/) used to conduct polls or surveys in the KU community
 with a simple web interface for creating polls with opening and closing for each poll or survey question,
