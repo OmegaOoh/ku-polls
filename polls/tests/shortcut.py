@@ -34,4 +34,4 @@ def create_choice(question, choice_text):
 
 def create_user(username, password):
     """Create a user with specifics username and password."""
-    return User.objects.create(username=username, password=password)
+    return User.objects.create_user(username=username, password=password)
