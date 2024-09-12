@@ -72,16 +72,12 @@ class DetailView(generic.DetailView):
             self.question = Question.objects.get(pk=question_id)
             if (not self.question.can_vote()):  # unpublished question/ closed.
                 if (not self.question.is_published()):
-                    raise Question.DoesNotExist
+                    raise Question.DoesNotExist("Unpublished Question")
                 else:
                     return redirect(f"{reverse('polls:results', question_id)}")
             return super().get(request, *args, **kwargs)
         except (Question.DoesNotExist):
-            messages.error(request, f"Polls {question_id} not exists.")
-            error_str = f"IP {get_client_ip(request)} tried to access\
-                        non-existent question (ID: {question_id})"
-            logger.error(error_str)
-            return redirect(f"{reverse('polls:index')}")
+            return handle_access_non_exist_question(request, question_id)
 
 
 class ResultsView(generic.DetailView):
@@ -113,8 +109,22 @@ class ResultsView(generic.DetailView):
         """Override of get method of an View superclass."""
         self.request = request
         question_id = kwargs['pk']
-        self.question = Question.objects.get(pk=question_id)
-        return super().get(request, *args, **kwargs)
+        try:
+            self.question = Question.objects.get(pk=question_id)
+            if not self.question.is_published():
+                raise Question.DoesNotExist
+            return super().get(request, *args, **kwargs)
+        except (Question.DoesNotExist):
+            return handle_access_non_exist_question(request, question_id) 
+
+
+def handle_access_non_exist_question(request, question_id):
+    """Redirect user to index page when question is not exists."""
+    messages.error(request, f"Polls {question_id} not exists.")
+    error_str = f"IP {get_client_ip(request)} tried to access"\
+                f"non-existent question (ID: {question_id})"
+    logger.error(error_str)
+    return redirect(f"{reverse('polls:index')}")
 
 
 @login_required
@@ -203,6 +213,8 @@ def get_client_ip(request):
 def log_user_logged_in(sender, request, user, **kwargs):
     """Log user log in action."""
     ip_addr = get_client_ip(request)
+    if (not user):
+        logger.error(f"User is none in logged in request (IP: {ip_addr})")
     logger.info(f"User {user.username} has logged in (IP: {ip_addr})")
 
 
@@ -210,6 +222,8 @@ def log_user_logged_in(sender, request, user, **kwargs):
 def log_user_logged_out(sender, request, user, **kwargs):
     """Log user log out action."""
     ip_addr = get_client_ip(request)
+    if (not user):
+        logger.error(f"User is none in logged out request (IP: {ip_addr})")
     logger.info(f"User {user.username} has logged out (IP: {ip_addr})")
 
 

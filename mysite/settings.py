@@ -104,11 +104,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = [
     # username & password authentication
-   'django.contrib.auth.backends.ModelBackend',  
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
-LOGIN_REDIRECT_URL= 'polls:index'   #after login, redirection
-LOGOUT_REDIRECT_URL= 'login' 
+LOGIN_REDIRECT_URL= 'polls:index'  # after login, redirection
+LOGOUT_REDIRECT_URL= 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
