@@ -115,7 +115,7 @@ class ResultsView(generic.DetailView):
                 raise Question.DoesNotExist
             return super().get(request, *args, **kwargs)
         except (Question.DoesNotExist):
-            return handle_access_non_exist_question(request, question_id) 
+            return handle_access_non_exist_question(request, question_id)
 
 
 def handle_access_non_exist_question(request, question_id):
