@@ -2,52 +2,38 @@
 
 ## Prerequisite
 
-- For MacOS need to install the package manager manually which in this guide will based on [HomeBrew](https://docs.brew.sh/Homebrew-and-Python).
+- Have `Python 3.11` Installed. You can verify if the Python version using
 
-- Linux guide is based on [Ubuntu](https://ubuntu.com)/[Debian](https://www.debian.org/) which has [Apt Package Manager](https://ubuntu.com/server/docs/package-management#advanced-packaging-tool).
-
-1. Have `Python 3.11` Installed.
-    You can verify if the Python version using
-
-   - Windows `python --version`
-   - MacOS/Linux `python3 --version`
+  - Windows `python --version`
+  - MacOS/Linux `python3 --version`
 
     If it failed or you're using an older version, the newer version installer can be found at [Python website](https://www.python.org/downloads/) or you can install using the system package manager
 
-   - Windows `winget install Python.Python.3.11`
-   - MacOS `brew install pyenv` then `pyenv install 3.11`
-   - Linux `sudo apt install python3.11`, `sudo apt install python3-pip` then `sudo apt install python3.11-venv`
+  - Windows `winget install Python.Python.3.11`
+  - MacOS `brew install pyenv` then `pyenv install 3.11`
+  - Linux `sudo apt install python3.11`, `sudo apt install python3-pip` then `sudo apt install python3.11-venv`
 
-1. Have `Git` installed verify using `git --version`
-
-    If Git does not install it can be installed from [Git Downloads](https://git-scm.com/download/) or using the package manager
-
-    - Windows `winget install --id Git.Git -e --source winget`
-    - MacOS `brew install git`
-    - Linux `apt-get install git`
-
-## Command Line Guide
-
-Most of the Installation will be done in the command line which is **Terminal** in MacOS/Linux and **Command Prompt** in Windows
-
-- `cd <directory_name>` to change directory
-- `mkdir <directory_name>` to create directory
 
 ## KU Polls Installations
 
 Before installation change the working directory to where you want to install the application.
 
-**Notes: Python will called `python` in Windows and `python3` in Linux/MacOS in this guide will use `python3`.
+*Notes: Python will called `python` in Windows and `python3` in Linux/MacOS in this guide will use `python3`
 
-1. Clone the app repository from GitHub using `git clone https://github.com/OmegaOoh/ku-polls.git`
-2. Change directory using `cd ku-polls`
-3. Create python virtual environment `python3 -m venv myvenv`
-4. Activate virtual environment `myvenv/Scripts/Activate`
-5. Install the required Python package `pip install -r requirements.txt`
-6. Migrate Database `python3 manage.py migrate`
-7. Load needed data `python3 manage.py loaddata <path-to-file>`
+1. Download latest release version of ku-polls from [Github](https://github.com/OmegaOoh/ku-polls/releases)
+   - `.zip` for Windows
+   - `.tar.gz` for Linux/MacOS
+2. Extract the ku-polls file
+3. Change directory using to ku-polls directory `cd ku-polls`
+   - If ku-polls directory is not on the root directory you can use
+    `cd <directory>`, use `cd ..` to go up 1 directory.
+4. Create python virtual environment `python3 -m venv myvenv`
+5. Activate virtual environment `myvenv/Scripts/Activate`
+6. Install the required Python package `pip install -r requirements.txt`
+7. Migrate Database `python3 manage.py migrate`
+8. Load needed data `python3 manage.py loaddata <path-to-file>`
     - Sample data can be found in the Data directory, which contains polls (Question + Choice), Votes, and Users.
-8. Create env file (use sample.env)
+   Create env file (use sample.env)
     - Windows `copy sample.env .env`
     - MacOS/Linux `cp sample.env .env`
 9. Run server `python3 manage.py runserver`
