@@ -91,7 +91,6 @@ Stored in `data/user.json`
    User.objects.create_user(username=<user_name>, password=<password>, email=<email>)
    ```
 
-
 ## Project Documents
 
 All details can be found at [KU Polls Wiki](../../wiki/Home) including:
