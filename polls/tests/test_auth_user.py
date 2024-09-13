@@ -1,24 +1,30 @@
+"""Module to test feature that needs user auth."""
+
+
 import django.test
 from .shortcut import create_user, create_question, create_choice
 from django.urls import reverse
-from django.contrib.auth.models import User
-from polls.models import Question, Choice
 from django.conf import settings
 
+
 class UserAuthTest(django.test.TestCase):
+    """Test for User Authorization Feature."""
 
     def setUp(self):
+        """Set up user account, question, and choice for test."""
         super().setUp()
         self.username = "testuser"
         self.password = "FatChance!"
         # Create a user with the correct username and password
-        self.user1 = User.objects.create_user(username=self.username, password=self.password)
-        
+        self.user1 = create_user(username=self.username,
+                                 password=self.password)
+
         # Create a question and choices for testing
         self.question = create_question("First Poll Question", 0)
         self.question.save()
         for n in range(1, 4):
-            choice = create_choice(question=self.question, choice_text=f"Choice {n}")
+            choice = create_choice(question=self.question,
+                                   choice_text=f"Choice {n}")
             choice.save()
 
     def test_logout(self):

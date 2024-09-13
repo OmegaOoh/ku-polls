@@ -1,29 +1,33 @@
-import datetime
+"""Test for Question Results Page."""
 
-from .shortcut import *
+from .shortcut import create_question
 from django.test import TestCase
-from django.utils import timezone
 from django.urls import reverse
-from polls.models import Question, Choice
+
 
 class QuestionResultsViewTests(TestCase):
-    """
-        Module to test the result view of a question.
-    """
+    """Module to test the result view of a question."""
+
     def test_future_result(self):
         """
-            The result view of a question with a pub_date in the future is return 404 not found.
+        Result view of a question with future pub_date.
+
+        User get redirected to index page.
         """
-        future_question = create_question(question_text="Future question.", pub_days=5)
+        future_question = create_question(question_text="Future question.",
+                                          pub_days=5)
         url = reverse("polls:results", args=(future_question.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
 
     def test_past_result(self):
         """
-            The result view of a question with a pub_date in the past displays the question's text.
+        Result view of question with pub_date set in the past.
+
+        Result are shown for user correctly.
         """
-        past_question = create_question(question_text="Past question.", pub_days=-5)
+        past_question = create_question(question_text="Past question.",
+                                        pub_days=-5)
         url = reverse("polls:results", args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
