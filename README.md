@@ -56,6 +56,11 @@ python3 manage.py createsuperuser
 ```
 
 ## Demo User
+To use user data need to be loaded
+
+```shell
+python3 manage.py loaddata data/users.json.
+```
 
 Stored in `data/user.json`
 
@@ -72,6 +77,10 @@ Stored in `data/user.json`
 |admin     | p@ssword |
 
 ## How to create user
+
+You can create new user using sign up page on the site
+
+or
 
 1. Run python shell
 

@@ -68,7 +68,9 @@ Before installation change the working directory to where you want to install th
    ```
 
     - Sample data can be found in the Data directory, which contains polls (Question + Choice), Votes, and Users.
-   Create env file (use sample.env)
+    - If you wish to load [votes](data/votes-v4.json) you need to load `users.json` first.
+    - Order of data to load should be [polls](data/polls-v4.json), [users](data/users.json), [votes](data/votes-v4.json)
+9. Create env file (use sample.env)
     - Windows `copy sample.env .env`
     - MacOS/Linux `cp sample.env .env`
 
@@ -98,3 +100,6 @@ KU polls has an Unit Test which you can run using
 ```shell
 python3 manage.py test polls
 ```
+
+## After Installation
+To run the application you can follows instructions in [README](README.md/#how-to-run)
