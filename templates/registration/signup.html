@@ -1,0 +1,26 @@
+<html>
+{%load static%}
+<link rel="stylesheet" href="../../static/auth.css">
+<html>
+<body>
+    <div class='box-reg'>
+        <h2>Sign up</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class='signup-help'>{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p class="signup-error">{{ error }}</p>
+                {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Sign up</button>
+        </form>
+    </div>
+</body>
+</html>
