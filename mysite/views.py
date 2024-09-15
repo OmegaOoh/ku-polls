@@ -1,3 +1,5 @@
+"""Module contains view for mysite."""
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .form import UserRegisterForm
@@ -15,7 +17,7 @@ def signup(request):
             # password input field is named 'password1'
             raw_passwd = form.cleaned_data.get('password1')
             email = form.cleaned_data.get('email')
-            user = authenticate(username=username,password=raw_passwd, email=email)
+            user = authenticate(username=username, password=raw_passwd, email=email)
             login(request, user)
             return redirect('polls:index')
         else:
