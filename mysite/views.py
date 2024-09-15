@@ -20,8 +20,6 @@ def signup(request):
             user = authenticate(username=username, password=raw_passwd, email=email)
             login(request, user)
             return redirect('polls:index')
-        else:
-            error(request, 'Invalid Form')
     else:
         # create a user form and display it the signup page
         form = UserRegisterForm()
