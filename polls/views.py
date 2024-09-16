@@ -70,11 +70,11 @@ class DetailView(generic.DetailView):
         question_id = kwargs['pk']
         try:
             self.question = Question.objects.get(pk=question_id)
-            if (not self.question.can_vote()):  # unpublished question/ closed.
-                if (not self.question.is_published()):
-                    raise Question.DoesNotExist("Unpublished Question")
-                else:
-                    return redirect(f"{reverse('polls:results', question_id)}")
+            if (not self.question.is_published()):  # Check for unpublished
+                raise Question.DoesNotExist("Unpublished Question")
+            elif (not self.question.can_vote()):   # Check if unable to vote
+                return HttpResponseRedirect(reverse('polls:results',
+                                            args=(self.question.id,)))
             return super().get(request, *args, **kwargs)
         except (Question.DoesNotExist):
             return handle_access_non_exist_question(request, question_id)
