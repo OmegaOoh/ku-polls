@@ -1,6 +1,7 @@
 # KU POLLS - Simple Polls Web Application
 
 [![Django CI](https://github.com/OmegaOoh/ku-polls/actions/workflows/django.yml/badge.svg)](https://github.com/OmegaOoh/ku-polls/actions/workflows/django.yml)
+[![codecov](https://codecov.io/github/OmegaOoh/ku-polls/graph/badge.svg?token=RSV7JKLQMQ)](https://codecov.io/github/OmegaOoh/ku-polls)
 [![Lint with flake8](https://github.com/OmegaOoh/ku-polls/actions/workflows/flake8.yml/badge.svg)](https://github.com/OmegaOoh/ku-polls/actions/workflows/flake8.yml)
 
 Polls web application powered by Django based on [Django Tutorial](https://docs.djangoproject.com/en/5.1/intro/) used to conduct polls or surveys in the KU community
