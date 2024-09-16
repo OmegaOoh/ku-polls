@@ -1,0 +1,28 @@
+<html>
+{%load static%}
+<link rel="stylesheet" href="../../static/auth.css">
+<html>
+<title> KU Polls: Sign Up </title>
+<body>
+    <div class='box-reg'>
+        <h2>Sign up</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class='signup-help'>{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p class="signup-error">{{ error }}</p>
+                {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Sign up</button>
+            <p class='redir-text'> Already have an account? <a href='/accounts/login'> Login </a></p>
+        </form>
+    </div>
+</body>
+</html>

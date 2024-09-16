@@ -44,7 +44,7 @@ class Question(models.Model):
         Check if the voting is allow on the question.
 
         :return: returns True if voting is allowed for this question.
-          That means,the current date/time is between the pub_date and end_date
+        That means,the current date/time is between the pub_date and end_date
         """
         now = timezone.now()
         if self.end_date is None:

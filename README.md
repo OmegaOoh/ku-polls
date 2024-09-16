@@ -18,7 +18,7 @@ Guide for installation is written in [Installation Guide](installation.md)
 
 *Notes: Python will called `python` in Windows and `python3` in Linux/MacOS in this guide will use `python3`
 
-If you are created virtual environment from [Intstallation](#installations) you can use `python3 manage.py runserver` to start the server.
+If you are created virtual environment from [Installation](#installations) you can use `python3 manage.py runserver` to start the server.
 
 To create environment and run the server follow these steps
 
@@ -57,6 +57,11 @@ python3 manage.py createsuperuser
 ```
 
 ## Demo User
+To use user data need to be loaded
+
+```shell
+python3 manage.py loaddata data/users.json.
+```
 
 Stored in `data/user.json`
 
@@ -73,6 +78,10 @@ Stored in `data/user.json`
 |admin     | p@ssword |
 
 ## How to create user
+
+You can create new user using sign up page on the site
+
+or
 
 1. Run python shell
 

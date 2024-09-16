@@ -27,3 +27,58 @@ body
 {
     font-size: 1.2vw;
 }
+
+.box .redir-text
+{
+    font-size: 1vw;
+    text-align: right;
+}
+
+.box-reg
+{
+    width: 50%;
+    background: white;
+    border-radius: 20px;
+    border-color: darkblue;
+    border-style:double;
+    margin-top: 10%;
+    margin-inline: 25%;
+    padding: 2%;
+    font-size: 1.5vw;
+    text-align: left;
+}
+
+.box-reg tr
+{
+    vertical-align: top;
+}
+
+.box-reg h2
+{
+    font-size: 3vw;
+    text-align: center;
+}
+
+.box-reg button
+{
+    font-size: 1.2vw;
+}
+
+.box-reg .redir-text
+{
+    font-size: 1vw;
+    text-align: left;
+}
+
+.signup-help
+{
+    color:gray;
+    font-size:1vw;
+}
+
+.signup-error
+{
+    color: red;
+    font-size: 1.25vw;
+}
+
