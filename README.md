@@ -51,7 +51,7 @@ To create environment and run the server follow these steps
 
 After server is running, application can be access by visit `localhost:8000` from any web browser. You can login with [Demo User](#demo-user) or created using [python shell](#how-to-create-user)
 
-Add or Remove of any question or choice can be done from `localhose:8000/admin` which needed to login as superuser, Demo credentials can be found [here](#super-user), or create new superuser using
+Add or Remove of any question or choice can be done from `localhost:8000/admin` which needed to login as superuser, Demo credentials can be found [here](#super-user), or create new superuser using
 
 ```shell
 python3 manage.py createsuperuser
