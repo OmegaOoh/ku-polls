@@ -1,0 +1,6 @@
+htmlcov
+.coverage
+activity.log
+*.sqlite3
+.github
+.venv
