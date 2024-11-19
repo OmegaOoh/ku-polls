@@ -104,3 +104,5 @@ cython_debug/
 # PyCharm
 .idea/
 
+# Database
+db/

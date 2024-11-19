@@ -13,9 +13,30 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.11, 3.12]
+  
+    env:
+      DATABASE_PASSWORD: 'password'
+      DATABASE_USER: 'pollsapp'
+      DATABASE_NAME: 'polls'
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: ${{env.DATABASE_USER}}
+          POSTGRES_PASSWORD: ${{env.DATABASE_PASSWORD}}
+          POSTGRES_DB: ${{env.DATABASE_NAME}}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U pollsapp"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
