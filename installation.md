@@ -26,6 +26,8 @@
 
 ## KU Polls Installations
 
+There are 2 options: [Normal Installation](installation.md/#normal-installation) or [Docker](installation.md/#installation-using-docker)
+
 ### Normal Installation
 
 Before installation change the working directory to where you want to install the application.
@@ -76,6 +78,16 @@ Before installation change the working directory to where you want to install th
     - Windows `copy sample.env .env`
     - MacOS/Linux `cp sample.env .env`
 
+### Installation using Docker
+
+1. Set environment variable in [[docker.env]]
+
+2. Run
+
+   ```shell
+    docker compose --env-file docker.env up --build
+   ```
+
 ## Settings Information
 
 - CSS won't load while the server is running without debug enabled
@@ -97,16 +109,6 @@ Before installation change the working directory to where you want to install th
 
     [More information](https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts) on ALLOWED_HOSTS
   - TIME_ZONE is [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) the site will works on.
-
-## Install Using Docker
-
-1. Set environment variable in [[docker.env]]
-
-2. Run
-
-   ```shell
-    docker compose --env-file docker.env up --build
-   ```
 
 ## Unit Testing
 
