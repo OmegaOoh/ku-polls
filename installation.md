@@ -10,7 +10,7 @@
     If it failed or you're using an older version, the newer version installer can be found at [Python website](https://www.python.org/downloads/) or you can install using the system package manager
 
   - Windows
-  
+
     ```shell
     winget install Python.Python.3.11
     ```
@@ -25,6 +25,8 @@
   - Linux follows [Ubuntu Python Installation Guide](https://www.geeksforgeeks.org/how-to-install-python-in-ubuntu/)
 
 ## KU Polls Installations
+
+### Normal Installation
 
 Before installation change the working directory to where you want to install the application.
 
@@ -88,18 +90,32 @@ Before installation change the working directory to where you want to install th
 
   - DEBUG is Boolean to turn on or off
   - ALLOWED_HOSTS host/domain name Django site can serve. Which can be added or modify. Multiple Allowed Hosts is separated by `,` all host need to be surrounded with quotation marks (`'` or `"`). For Example:
-      ```
+
+      ```shell
       ALLOWED_HOSTS = 'localhost, 127.0.0.1, www.examples.com'
       ```
+
     [More information](https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts) on ALLOWED_HOSTS
   - TIME_ZONE is [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) the site will works on.
+
+## Install Using Docker
+
+1. Set environment variable in [[docker.env]]
+
+2. Run
+
+   ```shell
+    docker compose --env-file docker.env up --build
+   ```
 
 ## Unit Testing
 
 KU polls has an Unit Test which you can run using
+
 ```shell
 python3 manage.py test polls
 ```
 
 ## After Installation
+
 To run the application you can follows instructions in [README](README.md/#how-to-run)
